@@ -22,30 +22,63 @@ const buttons = [
     {cls:'no-0',label:'0'},
     {cls:'dot',label:'.'},
     {cls:'ans',label:'='}];
+
+    const symbols = ['+',"-",'*',"/"]
     
     export const CalculatorFrame =() => {
         const [textToDisplay,setTextToDisplay] = useState('');
 
         const handleOnClick = (value) => {
             let str = textToDisplay + value;
-            
+
+            if(textToDisplay.length < 1 && ['*','/'].includes(value)){
+                return;
+            }
+
             if (value === '=') {
+                const lastChar = textToDisplay.slice(-1);
+                if(symbols.includes(lastChar)){
+                    str = textToDisplay.slice(0,-1);
+setTextToDisplay(str);
+                }
                 return onTotal();
             }
 
+            if (value === "." && textToDisplay.includes('.')) {
+                return;
+            }
+
+            if (value === 'AC'){
+            return setTextToDisplay('');
+            }
             if (value === 'C'){
-                str = '';
+                 str = textToDisplay.slice(0,-1);
+            }
+            if(symbols.includes(value)){
+                const lastChar = textToDisplay.slice(-1);
+                if(symbols.includes(lastChar)){
+                    const str = textToDisplay.slice(0 ,-1) + value;
+                    return setTextToDisplay(str);
+                }
             }
 
 
 
 
-            setTextToDisplay(str);
-            const onTotal = () => {
-               const ttl = eval(textToDisplay);
-               setTextToDisplay(ttl);
-            }
+            setTextToDisplay(str)
         };
+
+            const onTotal = () => {
+                let str = textToDisplay;
+                const lastChar = textToDisplay.slice(-1);
+
+                if (symbols.includes(lastChar)){
+                    str = textToDisplay.slice(0,-1);
+                }
+               const ttl = eval(str);
+               setTextToDisplay(ttl.toString());
+            }
+    
 
         return (
             <div className='mainParent'>
