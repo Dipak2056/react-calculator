@@ -22,26 +22,26 @@ const buttons = [
     {cls:'no-0',label:'0'},
     {cls:'dot',label:'.'},
     {cls:'ans',label:'='}];
-
+    
     const symbols = ['+',"-",'*',"/"]
     
     export const CalculatorFrame =() => {
         const [textToDisplay,setTextToDisplay] = useState('');
         const [isAnswered,setIsAnswered] = useState(false);
         const [lastSymbol,setLastSymbol] = useState('');
-
+        
         const handleOnClick = (value) => {
-          
             let str = textToDisplay + value;
-
+            //if someone tries to start with multi or divide
             if(textToDisplay.length < 1 && ['*','/'].includes(value)){
                 return;
             }
+            
             if (symbols.includes(value)){
                 setLastSymbol(value);
             }
-
-
+            
+            
             if (value === '=') {
                 const lastChar = textToDisplay.slice(-1);
                 if(symbols.includes(lastChar)){
@@ -50,7 +50,7 @@ const buttons = [
                 }
                 return onTotal();
             }
-
+            
             //handeling only one dot for number set
             if (value === "." ) {
                 //1. handle before any symbols
@@ -64,16 +64,15 @@ const buttons = [
                     if(lastNumberSet.includes('.')){
                         return;
                     }
-                    console.log(lastSymbolIndex,lastNumberSet);
                 }
             }
-
+            
             if (value === 'AC'){
-            return setTextToDisplay('');
+                return setTextToDisplay('');
             }
             if (value === 'C'){
-                 str = textToDisplay.slice(0,-1);
-                 return setTextToDisplay(str);
+                str = textToDisplay.slice(0,-1);
+                return setTextToDisplay(str);
             }
             if(symbols.includes(value)){
                 const lastChar = textToDisplay.slice(-1);
@@ -82,29 +81,28 @@ const buttons = [
                     return setTextToDisplay(str);
                 }
             }
-
-
+            
+            
+            
             if(isAnswered && value !== '='){
                 setIsAnswered(false);
                 setTextToDisplay(value);  
                 return;          
             }
-
+            
             setTextToDisplay(str)
         };
-
-            const onTotal = () => {
-                let str = textToDisplay;
-                const lastChar = textToDisplay.slice(-1);
-
-                if (symbols.includes(lastChar)){
-                    str = textToDisplay.slice(0,-1);
-                }
-               const ttl = eval(str);
-               setTextToDisplay(ttl.toString());
-               setIsAnswered(true);
+        const onTotal = () => {
+            let str = textToDisplay;
+            const lastChar = textToDisplay.slice(-1);
+            
+            if (symbols.includes(lastChar)){
+                str = textToDisplay.slice(0,-1);
             }
-    
+            const ttl = eval(str);
+            setTextToDisplay(ttl.toString());
+            setIsAnswered(true);
+        }
 
         return (
             <div className='mainParent'>
