@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+body{
   align-items: center;
+  background: linear-gradient(to right, grey,#B9ACAC);
+  background-repeat:no-repeat ;
+  display: flex;
+  font-size: 2rem;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+}
+.mainParent{
+  background:rgba(255,255,255,0.40);
+  border-radius: 10px;
+  box-shadow: -5px 5px 20px #8C4F2F;
+  padding: 2rem;
+  width: 80%;
+  margin: auto;
+}
+.result {
+  background: #fff;
+  border-radius: 10px;
+  border:1px solid rgba(0,0,0,0.5);
+  box-shadow: 5px -5px 3px grey;
+  display: flex;
+  font-weight: bolder;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+.items {
+  display: grid;
+  gap:0.9rem;
+  grid-template-columns: repeat(4,1fr);
+  margin-top: 1rem;
+  grid-template-areas: 
+  "clear clean divide multi"
+  "no7 no8 no9 minus"
+  "no6 no5 no4 plus"
+  "no3 no2 no1 ans"
+  "dot no0 no0 ans";
+}
+.items>button{
+
+  border-radius: 5px;
+  background:rgba(255,255,255,0.40);
+  background:#5E4F4F ;
+  font-size: 1.5rem;
+
+  min-height: 50px;
+  box-shadow: 5px -5px 3px grey;
+  border:none
+}
+.items>button:hover{
+  cursor: pointer;
+  background: saddlebrown;
   color: white;
-}
+  box-shadow: none;
+  transition: box-shadow 0.2s;
 
-.App-link {
-  color: #61dafb;
 }
+.clear {grid-area:clear;}
+.clean {grid-area:clean ;}
+.divide {grid-area:divide ;}
+.multi {grid-area:multi ;}
+.plus {grid-area:plus ;}
+.minus {grid-area:minus ;}
+.no-9 {grid-area:no9 ;}
+.no-8 {grid-area:no8 ;}
+.no-7 {grid-area:no7 ;}
+.no-6 {grid-area:no6 ;}
+.no-5 {grid-area:no5 ;}
+.no-4 {grid-area:no4 ;}
+.no-3 {grid-area:no3 ;}
+.no-2 {grid-area:no2 ;}
+.no-1 {grid-area:no1 ;}
+.no-0 {grid-area:no0 ;}
+.dot {grid-area:dot ;}
+.ans {grid-area:ans ;}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.prank{
+  animation: shake 0.2s ease-in;
+}
+@keyframes shake {
+  0%{
+      display: block;
+      transform: translateX(10px);
   }
-  to {
-    transform: rotate(360deg);
+  25%{
+      transform: translateY(-10px);
+
   }
+  50%{
+      transform: translateX(10px);
+
+  }
+  75%{
+      transform: translateY(-10px);
+
+  }
+  100%{
+      transform: translateX(-10px);
+  }
+  
 }
