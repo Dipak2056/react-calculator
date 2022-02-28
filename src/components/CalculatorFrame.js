@@ -27,25 +27,45 @@ const buttons = [
     
     export const CalculatorFrame =() => {
         const [textToDisplay,setTextToDisplay] = useState('');
+        const [isAnswered,setIsAnswered] = useState(false);
+        const [lastSymbol,setLastSymbol] = useState('');
 
         const handleOnClick = (value) => {
+          
             let str = textToDisplay + value;
 
             if(textToDisplay.length < 1 && ['*','/'].includes(value)){
                 return;
             }
+            if (symbols.includes(value)){
+                setLastSymbol(value);
+            }
+
 
             if (value === '=') {
                 const lastChar = textToDisplay.slice(-1);
                 if(symbols.includes(lastChar)){
                     str = textToDisplay.slice(0,-1);
-setTextToDisplay(str);
+                    setTextToDisplay(str);
                 }
                 return onTotal();
             }
 
-            if (value === "." && textToDisplay.includes('.')) {
-                return;
+            //handeling only one dot for number set
+            if (value === "." ) {
+                //1. handle before any symbols
+                if(!lastSymbol && textToDisplay.includes('.')){
+                    return;
+                }
+                //2. handle after symbols
+                if (lastSymbol) {
+                    const lastSymbolIndex = textToDisplay.lastIndexOf(lastSymbol);
+                    const lastNumberSet = textToDisplay.slice(lastSymbolIndex+1,textToDisplay.length);
+                    if(lastNumberSet.includes('.')){
+                        return;
+                    }
+                    console.log(lastSymbolIndex,lastNumberSet);
+                }
             }
 
             if (value === 'AC'){
@@ -53,6 +73,7 @@ setTextToDisplay(str);
             }
             if (value === 'C'){
                  str = textToDisplay.slice(0,-1);
+                 return setTextToDisplay(str);
             }
             if(symbols.includes(value)){
                 const lastChar = textToDisplay.slice(-1);
@@ -63,7 +84,11 @@ setTextToDisplay(str);
             }
 
 
-
+            if(isAnswered && value !== '='){
+                setIsAnswered(false);
+                setTextToDisplay(value);  
+                return;          
+            }
 
             setTextToDisplay(str)
         };
@@ -77,6 +102,7 @@ setTextToDisplay(str);
                 }
                const ttl = eval(str);
                setTextToDisplay(ttl.toString());
+               setIsAnswered(true);
             }
     
 
